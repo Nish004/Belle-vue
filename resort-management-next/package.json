@@ -1,0 +1,35 @@
+{
+  "name": "resort-management-next",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.7.2",
+    "@fortawesome/free-brands-svg-icons": "^6.7.2",
+    "@react-icons/all-files": "^4.1.0",
+    "bootstrap": "^5.3.6",
+    "next": "^15.3.2",
+    "pocketbase": "^0.26.0",
+    "react": "^19.0.0",
+    "react-bootstrap": "^2.10.10",
+    "react-datepicker": "^8.3.0",
+    "react-dom": "^19.0.0",
+    "swiper": "^11.2.8"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@types/node": "^20.17.50",
+    "@types/react": "^19.1.5",
+    "@types/react-dom": "^19",
+    "css-loader": "^7.1.2",
+    "eslint": "^9",
+    "eslint-config-next": "15.3.2",
+    "style-loader": "^4.0.0",
+    "typescript": "^5"
+  }
+}

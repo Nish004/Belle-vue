@@ -1,0 +1,23 @@
+.formWrapper {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+input,
+select {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+input:focus,
+select:focus {
+  border-color: #333;
+  outline: none;
+}
+
+.submitButton {
+  padding: 10px 30px;
+  font-weight: 600;
+  border-radius: 10px;
+}

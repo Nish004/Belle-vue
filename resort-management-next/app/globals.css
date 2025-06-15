@@ -1,0 +1,83 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import '../styles/Navbar.module.css';
+@import '../styles/Footer.module.css';
+
+/* Add these base styles */
+:root {
+  --foreground: #000;
+  --background: #fff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground: #fff;
+    --background: #000;
+  }
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  color: var(--foreground);
+  background: var(--background);
+  transition: all 0.3s ease;
+}
+
+.no-js .client-side-only {
+  display: none;
+}
+@font-face {
+  font-family: 'YourFontName';
+  src: url('/fonts/yourfont.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  font-family: 'YourFontName', sans-serif;
+}
+::-webkit-scrollbar {
+  display: none;
+}
+
+html {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  overflow-x: hidden;
+}
+
+body {
+  overflow-x: hidden;
+}
+/* In your page.module.css */
+.heroCarousel {
+  height: 100vh;
+  min-height: 600px;
+  position: relative;
+}
+
+.carouselItemFull {
+  height: 100vh;
+  min-height: 600px;
+}
+
+.imageWrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background-color: #faf9f7;
+}
+
+
+.carouselImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;          /* show full image */
+  object-position: center;      /* center it */
+  display: block;
+}
