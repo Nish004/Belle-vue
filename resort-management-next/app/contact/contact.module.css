@@ -1,0 +1,80 @@
+.fullPage {
+  min-height: 100vh;
+  background: linear-gradient(to right, #e0f7fa, #ffffff);
+  display: flex;
+  align-items: center;
+  padding: 60px 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+.contactContainer {
+  background: transparent;
+  padding: 20px;
+}
+
+.leftPanel {
+  text-align: center;
+  padding: 30px;
+}
+
+.contactImage {
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #333;
+}
+
+.subtitle {
+  font-size: 16px;
+  color: #555;
+}
+
+.formCard {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 40px 30px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.formTitle {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #1a1a1a;
+}
+
+.input {
+  border-radius: 12px;
+  padding: 12px 14px;
+  border: 1px solid #ccc;
+  background: rgba(255, 255, 255, 0.95);
+  font-size: 15px;
+  transition: all 0.2s ease;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.1);
+}
+
+.sendButton {
+  background-color: #0d6efd;
+  color: #fff;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 16px;
+  border: none;
+  transition: background 0.3s ease;
+}
+
+.sendButton:hover {
+  background-color: #084298;
+}

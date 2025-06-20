@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import styles from './page.module.css';
 
-// Image paths (now in public/assets/)
+// Image paths
 const hero1 = '/assets/hero1.jpg';
 const hero2 = '/assets/hero2.jfif';
 const hero3 = '/assets/hero3.jfif';
@@ -24,23 +24,22 @@ const galleryImages = [
 ];
 
 const cuisineImages = [
-   '/assets/cusines/cusine1.jpg',
-   '/assets/cusines/cusine2.jpg',
-   '/assets/cusines/cusine3.jpg',
-   '/assets/cusines/cusine4.jpg',
-   '/assets/cusines/cusine5.jpg',
-   '/assets/cusines/cusine6.jpg',
-   '/assets/cusines/cusine7.jpg',
-   '/assets/cusines/cusine8.jpg',
-   '/assets/cusines/cusine9.jpg',
-   '/assets/cusines/cusine10.jpg',
-   '/assets/cusines/cusine11.jpg',
-   '/assets/cusines/cusine12.jpg',
-   '/assets/cusines/cusine13.jpg',
-   '/assets/cusines/cusine14.jpg',
-   '/assets/cusines/cusine15.jpg'
-]
-
+  '/assets/cusines/cusine1.jpg',
+  '/assets/cusines/cusine2.jpg',
+  '/assets/cusines/cusine3.jpg',
+  '/assets/cusines/cusine4.jpg',
+  '/assets/cusines/cusine5.jpg',
+  '/assets/cusines/cusine6.jpg',
+  '/assets/cusines/cusine7.jpg',
+  '/assets/cusines/cusine8.jpg',
+  '/assets/cusines/cusine9.jpg',
+  '/assets/cusines/cusine10.jpg',
+  '/assets/cusines/cusine11.jpg',
+  '/assets/cusines/cusine12.jpg',
+  '/assets/cusines/cusine13.jpg',
+  '/assets/cusines/cusine14.jpg',
+  '/assets/cusines/cusine15.jpg'
+];
 
 const roomTypes = [
   {
@@ -65,8 +64,6 @@ const roomTypes = [
     highlight: "Best Value"
   }
 ];
-
-
 
 export default function Home() {
   const [showModal, setShowModal] = useState(false);
@@ -105,6 +102,16 @@ export default function Home() {
                 >
                   Book Now
                 </Button>
+                {/* Contact Us Button */}
+                <Button 
+                  as={Link} 
+                  href="/contact" 
+                  variant="light" 
+                  size="lg"
+                  className={styles.ctaButton}
+                >
+                  Contact Us
+                </Button>
               </div>
             </Carousel.Caption>
           </Carousel.Item>
@@ -135,18 +142,16 @@ export default function Home() {
             </Carousel.Caption>
           </Carousel.Item>
 
-<Carousel.Item className={styles.carouselItemFull}>
-  <div className={styles.imageWrapper}>
-    <Image
-      src={hero3}
-      alt="Resort Interior"
-      fill
-      className={`${styles.carouselImage} ${styles.thirdImageZoom}`} // Added special class
-      style={{
-        objectPosition: "center center" // Force center alignment
-      }}
-    />
-  </div>
+          <Carousel.Item className={styles.carouselItemFull}>
+            <div className={styles.imageWrapper}>
+              <Image
+                src={hero3}
+                alt="Resort Interior"
+                fill
+                className={`${styles.carouselImage} ${styles.thirdImageZoom}`}
+                style={{ objectPosition: "center center" }}
+              />
+            </div>
             <Carousel.Caption className={styles.heroCaption}>
               <h1>EXCLUSIVE OFFERS</h1>
               <p>Limited time summer specials</p>
@@ -173,7 +178,6 @@ export default function Home() {
             <h2 className={styles.sectionTitle}>WELCOME TO BELLE VUE</h2>
             <div className={styles.divider}></div>
           </div>
-          
           <div className="row align-items-center">
             <div className="col-lg-6 mb-4 mb-lg-0">
               <div className={styles.welcomeImageContainer}>
@@ -201,152 +205,141 @@ export default function Home() {
                 >
                   DISCOVER MORE
                 </Button>
+                {/* Contact Us Button */}
+                <Button 
+                  variant="dark" 
+                  size="lg" 
+                  as={Link} 
+                  href="/contact"
+                  className={styles.discoverButton}
+                >
+                  CONTACT US
+                </Button>
               </div>
             </div>
           </div>
         </Container>
       </section>
 
-  {/* Rooms Section */}
-<section className={styles.roomsSection}>
-  <Container className="py-md-5">
-    <div className="text-center mb-5">
-      <h2 className={styles.sectionTitle}>ACCOMMODATIONS</h2>
-      <div className={styles.divider}></div>
-      <p className={styles.sectionSubtitle}>
-        Each of our accommodations has been thoughtfully designed to provide the ultimate in comfort and style.
-      </p>
-    </div>
-    
-    <div className="row g-4">
-      {roomTypes.map((room, index) => (
-        <div key={index} className="col-md-4 d-flex">
-          <div className={`card h-100 border-0 bg-transparent ${styles.roomCard}`}>
-            <div className={styles.roomImageContainer}>
-              <Image 
-                src={galleryImages[index % galleryImages.length]} 
-                alt={room.name}
-                fill
-                className={styles.roomImage}
-                sizes="(max-width: 768px) 100vw, 33vw"
-              />
-              {room.highlight && (
-                <div className={styles.highlightBadge}>
-                  <span>{room.highlight}</span>
-                </div>
-              )}
-            </div>
-            <div className={`card-body px-0 text-center d-flex flex-column ${styles.roomCardBody}`}>
-              <h5 className={styles.roomTitle}>
-                {room.name.toUpperCase()}
-              </h5>
-              <p className={styles.roomDescription}>
-                {room.description}
-              </p>
-              <div className="mt-auto">
-                <div className="d-flex flex-column align-items-center">
-                  <span className={styles.roomPrice}>
-                    From <strong>${room.price}</strong> / night
-                  </span>
-                  <Button 
-                    as={Link} 
-                    href="/bookroom" 
-                    variant="outline-dark"
-                    className={styles.bookButton}
-                  >
-                    BOOK NOW
-                  </Button>
+      {/* Rooms Section */}
+      <section className={styles.roomsSection}>
+        <Container className="py-md-5">
+          <div className="text-center mb-5">
+            <h2 className={styles.sectionTitle}>ACCOMMODATIONS</h2>
+            <div className={styles.divider}></div>
+            <p className={styles.sectionSubtitle}>
+              Each of our accommodations has been thoughtfully designed to provide the ultimate in comfort and style.
+            </p>
+          </div>
+          <div className="row g-4">
+            {roomTypes.map((room, index) => (
+              <div key={index} className="col-md-4 d-flex">
+                <div className={`card h-100 border-0 bg-transparent ${styles.roomCard}`}>
+                  <div className={styles.roomImageContainer}>
+                    <Image 
+                      src={galleryImages[index % galleryImages.length]} 
+                      alt={room.name}
+                      fill
+                      className={styles.roomImage}
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                    />
+                    {room.highlight && (
+                      <div className={styles.highlightBadge}>
+                        <span>{room.highlight}</span>
+                      </div>
+                    )}
+                  </div>
+                  <div className={`card-body px-0 text-center d-flex flex-column ${styles.roomCardBody}`}>
+                    <h5 className={styles.roomTitle}>
+                      {room.name.toUpperCase()}
+                    </h5>
+                    <p className={styles.roomDescription}>
+                      {room.description}
+                    </p>
+                    <div className="mt-auto">
+                      <div className="d-flex flex-column align-items-center">
+                        <span className={styles.roomPrice}>
+                          From <strong>${room.price}</strong> / night
+                        </span>
+                        <Button 
+                          as={Link} 
+                          href="/bookroom" 
+                          variant="outline-dark"
+                          className={styles.bookButton}
+                        >
+                          BOOK NOW
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
+            ))}
           </div>
-        </div>
-      ))}
-    </div>
-  </Container>
-</section>
+        </Container>
+      </section>
 
-{/* Cuisines Carousel Section */}
-<section className={styles.galleryCarouselSection}>
-<Container className="py-md-5">
-<div className="text-center mb-5">
-<h2 className={styles.sectionTitle}>CUISINES</h2>
-<div className={styles.divider}></div>
-<p className={styles.sectionSubtitle}>
-Indulge in a rich variety of cuisines crafted by our world-class chefs.
-</p>
-</div>
+      {/* Cuisine Carousel */}
+      <section className={styles.galleryCarouselSection}>
+        <Container className="py-md-5">
+          <div className="text-center mb-5">
+            <h2 className={styles.sectionTitle}>CUISINES</h2>
+            <div className={styles.divider}></div>
+            <p className={styles.sectionSubtitle}>
+              Indulge in a rich variety of cuisines crafted by our world-class chefs.
+            </p>
+          </div>
+          <div className={styles.galleryCarouselWrapper}>
+            <Carousel fade interval={4000} indicators className={styles.galleryCarousel}>
+              {cuisineImages.map((img, index) => (
+                <Carousel.Item key={index} className={styles.galleryCarouselItem}>
+                  <div className={styles.galleryImageContainer}>
+                    <Image
+                      src={img}
+                      alt={`Cuisine ${index + 1}`}
+                      fill
+                      className={styles.galleryImage}
+                      sizes="(max-width: 768px) 100vw, 80vw"
+                      priority={index < 3}
+                    />
+                  </div>
+                </Carousel.Item>
+              ))}
+            </Carousel>
+          </div>
+        </Container>
+      </section>
 
-<div className={styles.galleryCarouselWrapper}>
-<Carousel
-fade
-interval={4000}
-indicators
-className={styles.galleryCarousel}
->
-{cuisineImages.map((img, index) => (
-<Carousel.Item key={index} className={styles.galleryCarouselItem}>
-<div className={styles.galleryImageContainer}>
-<Image
-
-src={img}
-alt={`Cuisine ${index + 1}`}
-fill
-className={styles.galleryImage}
-sizes="(max-width: 768px) 100vw, 80vw"
-priority={index < 3}
-/>
-</div>
-</Carousel.Item>
-))}
-</Carousel>
-</div>
-</Container>
-</section>
-
-
-      {/* Gallery Carousel */}
-    {/* Gallery Carousel Section */}
-{/* Gallery Carousel Section */}
-<section className={styles.galleryCarouselSection}>
-  <Container className="py-md-5">
-    <div className="text-center mb-5">
-      <h2 className={styles.sectionTitle}>GALLERY</h2>
-      <div className={styles.divider}></div>
-      <p className={styles.sectionSubtitle}>
-        Explore the beauty of Belle Vue through our curated collection of images.
-      </p>
-    </div>
-    
-    <div className={styles.galleryCarouselWrapper}>
-      <Carousel 
-        fade 
-        interval={4000} 
-        indicators 
-        className={styles.galleryCarousel}
-      >
-        {galleryImages.map((img, index) => (
-          <Carousel.Item key={index} className={styles.galleryCarouselItem}>
-            <div className={styles.galleryImageContainer}>
-              <Image
-                
-                src={img}
-                alt={`Gallery ${index + 1}`}
-                fill
-                className={styles.galleryImage}
-                sizes="(max-width: 768px) 100vw, 80vw"
-                priority={index < 3} // Preload first 3 images
-              />
-            </div>
-          </Carousel.Item>
-        ))}
-      </Carousel>
-    </div>
-  </Container>
-</section>
-
-
-
+      {/* Gallery Section */}
+      <section className={styles.galleryCarouselSection}>
+        <Container className="py-md-5">
+          <div className="text-center mb-5">
+            <h2 className={styles.sectionTitle}>GALLERY</h2>
+            <div className={styles.divider}></div>
+            <p className={styles.sectionSubtitle}>
+              Explore the beauty of Belle Vue through our curated collection of images.
+            </p>
+          </div>
+          <div className={styles.galleryCarouselWrapper}>
+            <Carousel fade interval={4000} indicators className={styles.galleryCarousel}>
+              {galleryImages.map((img, index) => (
+                <Carousel.Item key={index} className={styles.galleryCarouselItem}>
+                  <div className={styles.galleryImageContainer}>
+                    <Image
+                      src={img}
+                      alt={`Gallery ${index + 1}`}
+                      fill
+                      className={styles.galleryImage}
+                      sizes="(max-width: 768px) 100vw, 80vw"
+                      priority={index < 3}
+                    />
+                  </div>
+                </Carousel.Item>
+              ))}
+            </Carousel>
+          </div>
+        </Container>
+      </section>
 
       {/* Image Modal */}
       <Modal 
@@ -376,8 +369,5 @@ priority={index < 3}
         </Modal.Body>
       </Modal>
     </div>
-    
-    
-    
   );
 }

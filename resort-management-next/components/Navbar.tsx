@@ -58,25 +58,20 @@ function ResortNavbar() {
           <Navbar.Toggle aria-controls="main-nav" className={styles.toggle} />
 
           <Navbar.Collapse id="main-nav" className={styles.collapse}>
+            {/* Left Side Nav Links */}
             <Nav className={styles.navLeft}>
-              <Nav.Link
-                href="/"
-                onClick={scrollToTop}
-                className={styles.navLink}
-              >
+              <Nav.Link href="/" onClick={scrollToTop} className={styles.navLink}>
                 Home
               </Nav.Link>
               <Nav.Link href="/bookroom" className={styles.navLink}>
                 Book Now
-              </Nav.Link>
-              <Nav.Link href="/gallery" className={styles.navLink}>
-                Gallery
               </Nav.Link>
               <Nav.Link href="/contact" className={styles.navLink}>
                 Contact
               </Nav.Link>
             </Nav>
 
+            {/* Right Side Login/Register or User Panel */}
             <Nav className={styles.navRight}>
               {!username ? (
                 <>

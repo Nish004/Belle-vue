@@ -41,13 +41,13 @@ export default function BookRoomPage() {
   const [selectedRoom, setSelectedRoom] = useState<any>(null);
   const router = useRouter();
 
-  useEffect(() => {
-    // Check if user logged in, else redirect to /login
-    const username = localStorage.getItem('username');
-    if (!username) {
-      router.push('/login');
-    }
-  }, [router]);
+  // useEffect(() => {
+  //   // Check if user logged in, else redirect to /login
+  //   const username = localStorage.getItem('username');
+  //   if (!username) {
+  //     router.push('/login');
+  //   }
+  // }, [router]);
 
   const handleBookClick = (room: any) => {
     setSelectedRoom(room);
