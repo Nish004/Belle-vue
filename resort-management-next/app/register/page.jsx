@@ -10,7 +10,7 @@ export default function RegisterPage() {
     console.log('Register Page Loaded ✅'); // Debug message
   }, []);
 
-  function handleRegister(e: React.FormEvent) {
+  function handleRegister(e) {
     e.preventDefault();
     if (username.trim() === '') {
       alert('Please enter a username');

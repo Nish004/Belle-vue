@@ -7,7 +7,7 @@ import Image from 'next/image';
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Message sent!");
     setSubmitted(true);

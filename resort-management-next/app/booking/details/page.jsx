@@ -15,11 +15,11 @@ export default function BookingDetailsPage() {
     guests: 1,
   });
 
-  const handleChange = (e: any) => {
+  const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     // For now just route to payment
     router.push('/booking/payment');
@@ -115,4 +115,3 @@ export default function BookingDetailsPage() {
     </Container>
   );
 }
-

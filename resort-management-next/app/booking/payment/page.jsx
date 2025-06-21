@@ -1,5 +1,5 @@
 'use client';
-import { useRouter } from 'next/navigation'; // 👈 Add this line
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Container, Form, Button, Row, Col, Card } from 'react-bootstrap';
 
@@ -11,38 +11,37 @@ export default function PaymentPage() {
   const [name, setName] = useState('');
 
   // Format card number as XXXX XXXX XXXX XXXX
-  const formatCardNumber = (value: string) => {
-    const cleaned = value.replace(/\D/g, '').slice(0, 16); // remove non-digits, limit to 16 digits
-    return cleaned.replace(/(.{4})/g, '$1 ').trim(); // insert space every 4 digits
+  const formatCardNumber = (value) => {
+    const cleaned = value.replace(/\D/g, '').slice(0, 16);
+    return cleaned.replace(/(.{4})/g, '$1 ').trim();
   };
 
   // Format expiry as MM/YY
-  const formatExpiry = (value: string) => {
-    const cleaned = value.replace(/\D/g, '').slice(0, 4); // remove non-digits, limit to 4 digits
+  const formatExpiry = (value) => {
+    const cleaned = value.replace(/\D/g, '').slice(0, 4);
     if (cleaned.length < 3) return cleaned;
     return `${cleaned.slice(0, 2)}/${cleaned.slice(2)}`;
   };
 
-  const handleCardChange = (e: any) => {
+  const handleCardChange = (e) => {
     const formatted = formatCardNumber(e.target.value);
     setCardNumber(formatted);
   };
 
-  const handleExpiryChange = (e: any) => {
+  const handleExpiryChange = (e) => {
     const formatted = formatExpiry(e.target.value);
     setExpiry(formatted);
   };
 
-  const handleCVVChange = (e: any) => {
-    const cleaned = e.target.value.replace(/\D/g, '').slice(0, 3); // max 3 digits
+  const handleCVVChange = (e) => {
+    const cleaned = e.target.value.replace(/\D/g, '').slice(0, 3);
     setCvv(cleaned);
   };
 
-const handlePayment = (e: any) => {
-  e.preventDefault();
-  router.push('/booking/confirmation'); 
-};
-
+  const handlePayment = (e) => {
+    e.preventDefault();
+    router.push('/booking/confirmation');
+  };
 
   return (
     <Container className="py-5 mt-5" style={{ paddingTop: '100px' }}>

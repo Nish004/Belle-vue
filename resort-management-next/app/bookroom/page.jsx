@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Container, Card, Button, Row, Col, Modal } from 'react-bootstrap';
 import Image from 'next/image';
@@ -38,18 +38,10 @@ const rooms = [
 
 export default function BookRoomPage() {
   const [showModal, setShowModal] = useState(false);
-  const [selectedRoom, setSelectedRoom] = useState<any>(null);
+  const [selectedRoom, setSelectedRoom] = useState(null);
   const router = useRouter();
 
-  // useEffect(() => {
-  //   // Check if user logged in, else redirect to /login
-  //   const username = localStorage.getItem('username');
-  //   if (!username) {
-  //     router.push('/login');
-  //   }
-  // }, [router]);
-
-  const handleBookClick = (room: any) => {
+  const handleBookClick = (room) => {
     setSelectedRoom(room);
     setShowModal(true);
   };

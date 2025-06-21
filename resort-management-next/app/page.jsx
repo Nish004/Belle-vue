@@ -67,9 +67,9 @@ const roomTypes = [
 
 export default function Home() {
   const [showModal, setShowModal] = useState(false);
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedImage, setSelectedImage] = useState(null); // removed :string | null
 
-  const openImageModal = (img: string) => {
+  const openImageModal = (img) => { // removed : string
     setSelectedImage(img);
     setShowModal(true);
   };

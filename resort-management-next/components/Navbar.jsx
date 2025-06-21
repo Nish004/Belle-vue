@@ -7,7 +7,7 @@ import styles from '../styles/Navbar.module.css';
 function ResortNavbar() {
   const [scrolled, setScrolled] = useState(false);
   const [isClient, setIsClient] = useState(false);
-  const [username, setUsername] = useState<string | null>(null);
+  const [username, setUsername] = useState(null); // Removed <string | null>
 
   const scrollToTop = () => {
     if (typeof window !== 'undefined') {

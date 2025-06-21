@@ -10,7 +10,7 @@ export default function LoginPage() {
     console.log("Login Page Loaded");  // ✅ Check console
   }, []);
 
-  function handleLogin(e: React.FormEvent) {
+  function handleLogin(e) {
     e.preventDefault();
     if (username.trim() === '') {
       alert('Please enter username');
