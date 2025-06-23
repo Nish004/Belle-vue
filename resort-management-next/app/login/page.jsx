@@ -1,38 +1,80 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import styles from './login.module.css';
 
 export default function LoginPage() {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const router = useRouter();
 
-  useEffect(() => {
-    console.log("Login Page Loaded");  // ✅ Check console
-  }, []);
-
-  function handleLogin(e) {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    if (username.trim() === '') {
-      alert('Please enter username');
+
+    if (!email.trim() || !password.trim()) {
+      alert('Please enter email and password');
       return;
     }
-    localStorage.setItem('username', username);
-    router.push('/dashboard');
-  }
+
+    try {
+      const res = await fetch('http://localhost:3000/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        // ✅ Save JWT to localStorage
+        localStorage.setItem('token', data.token);
+        window.location.href = '/dashboard'; // This reloads and re-runs context
+        
+        // ✅ Decode JWT to get user info
+        const payload = JSON.parse(atob(data.token.split('.')[1]));
+        localStorage.setItem('user', JSON.stringify(payload)); 
+        console.log(payload)
+        alert('Login successful!');
+        if (payload.role === 'user')
+        router.push('/dashboard');
+        else router.push('/admin')
+      } else {
+        alert(data.error || 'Login failed');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Network error');
+    }
+  };
 
   return (
-    <div style={{ padding: '2rem', color: 'black' }}>
-      <h1>Login Page</h1> {/* ✅ Make sure this is visible */}
-      <form onSubmit={handleLogin}>
-        <input
-          type="text"
-          placeholder="Enter username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-        />
-        <button type="submit">Login</button>
-      </form>
+    <div className={styles.container}>
+      <div className={styles.formWrapper}>
+        <h1 className={styles.heading}>Welcome Back</h1>
+        <form onSubmit={handleLogin} className={styles.form}>
+          <input
+            type="email"
+            name="email"
+            placeholder="Email Address"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className={styles.inputField}
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Enter Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className={styles.inputField}
+            autoComplete="current-password"
+          />
+          <button type="submit" className={styles.submitButton}>Login</button>
+        </form>
+        <p className={styles.loginLink}>
+          Don't have an account? <a href="/register">Register</a>
+        </p>
+      </div>
     </div>
   );
 }

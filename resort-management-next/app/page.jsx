@@ -65,6 +65,16 @@ const roomTypes = [
   }
 ];
 
+const handleProtectedRoute = (href) => {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    alert('Please login to continue');
+    window.location.href = '/login';
+  } else {
+    window.location.href = href;
+  }
+};
+
 export default function Home() {
   const [showModal, setShowModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null); // removed :string | null
@@ -94,24 +104,14 @@ export default function Home() {
               <p>Luxury Lakeside Resort & Spa</p>
               <div className={styles.ctaButtons}>
                 <Button 
-                  as={Link} 
-                  href="/bookroom" 
-                  variant="outline-light" 
-                  size="lg"
-                  className={`me-3 ${styles.ctaButton}`}
-                >
-                  Book Now
+                onClick={() => handleProtectedRoute('/bookroom')}
+                variant="outline-light" 
+                size="lg"
+                className={`me-3 ${styles.ctaButton}`}>
+               Book Now
                 </Button>
                 {/* Contact Us Button */}
-                <Button 
-                  as={Link} 
-                  href="/contact" 
-                  variant="light" 
-                  size="lg"
-                  className={styles.ctaButton}
-                >
-                  Contact Us
-                </Button>
+                
               </div>
             </Carousel.Caption>
           </Carousel.Item>
@@ -130,14 +130,14 @@ export default function Home() {
               <p>Our award-winning spa awaits you</p>
               <div className={styles.ctaButtons}>
                 <Button 
-                  as={Link} 
-                  href="/bookroom" 
-                  variant="outline-light" 
-                  size="lg"
-                  className={styles.ctaButton}
-                >
-                  Book Spa
-                </Button>
+  onClick={() => handleProtectedRoute('/bookroom')}
+  variant="outline-light" 
+  size="lg"
+  className={`me-3 ${styles.ctaButton}`}
+>
+  Book Now
+</Button>
+
               </div>
             </Carousel.Caption>
           </Carousel.Item>
@@ -157,14 +157,14 @@ export default function Home() {
               <p>Limited time summer specials</p>
               <div className={styles.ctaButtons}>
                 <Button 
-                  as={Link} 
-                  href="/bookroom" 
-                  variant="outline-light" 
-                  size="lg"
-                  className={styles.ctaButton}
-                >
-                  View Offers
-                </Button>
+  onClick={() => handleProtectedRoute('/bookroom')}
+  variant="outline-light" 
+  size="lg"
+  className={styles.ctaButton}
+>
+  View Offers
+</Button>
+ 
               </div>
             </Carousel.Caption>
           </Carousel.Item>
@@ -197,14 +197,14 @@ export default function Home() {
               </p>
               <div className="d-flex flex-wrap gap-3 mt-4">
                 <Button 
-                  variant="outline-dark" 
-                  size="lg" 
-                  as={Link} 
-                  href="/about"
-                  className={styles.discoverButton}
-                >
-                  DISCOVER MORE
-                </Button>
+  onClick={() => handleProtectedRoute('/bookroom')}
+  variant="outline-light" 
+  size="lg"
+  className={`me-3 ${styles.ctaButton}`}
+>
+Discover More
+</Button>
+
                 {/* Contact Us Button */}
                 <Button 
                   variant="dark" 
@@ -262,13 +262,14 @@ export default function Home() {
                           From <strong>${room.price}</strong> / night
                         </span>
                         <Button 
-                          as={Link} 
-                          href="/bookroom" 
-                          variant="outline-dark"
-                          className={styles.bookButton}
-                        >
-                          BOOK NOW
-                        </Button>
+  onClick={() => handleProtectedRoute('/bookroom')}
+  variant="outline-light" 
+  size="lg"
+  className={`me-3 ${styles.ctaButton}`}
+>
+  Book Now
+</Button>
+
                       </div>
                     </div>
                   </div>

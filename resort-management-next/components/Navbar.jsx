@@ -6,37 +6,56 @@ import styles from '../styles/Navbar.module.css';
 
 function ResortNavbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [isClient, setIsClient] = useState(false);
-  const [username, setUsername] = useState(null); // Removed <string | null>
+  const [username, setUsername] = useState(null);
+  const [loading, setLoading] = useState(true); // 👈 loading state
 
-  const scrollToTop = () => {
-    if (typeof window !== 'undefined') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+  // Scroll detection
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Fetch user profile
+  const fetchUserProfile = () => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      fetch('/api/user/profile', {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.name) setUsername(data.name);
+        })
+        .catch((err) => {
+          console.error('Failed to fetch user:', err);
+          localStorage.removeItem('token');
+        })
+        .finally(() => setLoading(false)); // ✅ done loading
+    } else {
+      setLoading(false); // ✅ even if no token, done
     }
   };
 
+  // Initial fetch + login state tracking
   useEffect(() => {
-    setIsClient(true);
-    if (typeof window !== 'undefined') {
-      const handleScroll = () => setScrolled(window.scrollY > 50);
-      window.addEventListener('scroll', handleScroll);
+    fetchUserProfile();
 
-      const user = localStorage.getItem('username');
-      setUsername(user);
-
-      return () => window.removeEventListener('scroll', handleScroll);
-    }
+    const handleStorageChange = (e) => {
+      if (e.key === 'token') fetchUserProfile();
+    };
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem('username');
+    localStorage.removeItem('token');
     setUsername(null);
-    if (typeof window !== 'undefined') {
-      window.location.href = '/';
-    }
+    window.location.href = '/';
   };
 
-  if (!isClient) return null;
+  // 🔒 Prevent flicker on initial render
+  if (loading) return null;
 
   return (
     <Navbar
@@ -48,7 +67,7 @@ function ResortNavbar() {
         <Container className={styles.container}>
           <Navbar.Brand
             href="/"
-            onClick={scrollToTop}
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className={styles.brandContainer}
           >
             <FaHotel className={styles.hotelIcon} />
@@ -58,39 +77,24 @@ function ResortNavbar() {
           <Navbar.Toggle aria-controls="main-nav" className={styles.toggle} />
 
           <Navbar.Collapse id="main-nav" className={styles.collapse}>
-            {/* Left Side Nav Links */}
             <Nav className={styles.navLeft}>
-              <Nav.Link href="/" onClick={scrollToTop} className={styles.navLink}>
-                Home
-              </Nav.Link>
-              <Nav.Link href="/bookroom" className={styles.navLink}>
-                Book Now
-              </Nav.Link>
-              <Nav.Link href="/contact" className={styles.navLink}>
-                Contact
-              </Nav.Link>
+              <Nav.Link href="/" className={styles.navLink}>Home</Nav.Link>
+              <Nav.Link href="/bookroom" className={styles.navLink}>Book Now</Nav.Link>
+              <Nav.Link href="/contact" className={styles.navLink}>Contact</Nav.Link>
             </Nav>
 
-            {/* Right Side Login/Register or User Panel */}
             <Nav className={styles.navRight}>
               {!username ? (
                 <>
-                  <Nav.Link href="/login" className={styles.customLoginBtn}>
-                    Login
-                  </Nav.Link>
-                  <Nav.Link href="/register" className={styles.customRegisterBtn}>
-                    Register
-                  </Nav.Link>
+                  <Nav.Link href="/login" className={styles.customLoginBtn}>Login</Nav.Link>
+                  <Nav.Link href="/register" className={styles.customRegisterBtn}>Register</Nav.Link>
                 </>
               ) : (
                 <>
-                  <span className={styles.welcomeText}>Welcome, {username}</span>
-                  <button onClick={handleLogout} className={styles.logoutBtn}>
-                    Logout
-                  </button>
-                  <Nav.Link href="/dashboard" className={styles.navLink}>
-                    Dashboard
+                  <Nav.Link href="/dashboard" className={styles.usernameLink}>
+                    {username}
                   </Nav.Link>
+                  
                 </>
               )}
             </Nav>

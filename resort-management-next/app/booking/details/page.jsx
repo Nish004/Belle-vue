@@ -1,7 +1,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import { Container, Form, Button, Row, Col } from 'react-bootstrap';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './details.module.css';
 
 export default function BookingDetailsPage() {
@@ -15,20 +15,48 @@ export default function BookingDetailsPage() {
     guests: 1,
   });
 
+  // ✅ useEffect now correctly inside the component
+  useEffect(() => {
+    const storedRoom = localStorage.getItem('selectedRoom');
+    if (!storedRoom) {
+      alert('No room selected. Redirecting...');
+      router.push('/bookroom');
+    }
+  }, [router]);
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // For now just route to payment
+
+    const selectedRoom = JSON.parse(localStorage.getItem('selectedRoom'));
+    if (!selectedRoom) {
+      alert('No room selected');
+      return;
+    }
+
+    const days =
+      (new Date(formData.checkOut) - new Date(formData.checkIn)) / (1000 * 60 * 60 * 24);
+    const totalPrice = selectedRoom.price * days;
+
+    const bookingData = {
+      room_id: selectedRoom.id,
+      check_in: formData.checkIn,
+      check_out: formData.checkOut,
+      total_price: totalPrice,
+    };
+
+    localStorage.setItem('bookingDetails', JSON.stringify(bookingData));
     router.push('/booking/payment');
   };
 
   return (
     <Container className="py-5 mt-5" style={{ paddingTop: '100px' }}>
       <h2 className="text-center mb-4">Guest Details</h2>
-      <Form onSubmit={handleSubmit}>
+
+      <Form onSubmit={handleSubmit} className={styles.formWrapper}>
         <Row className="mb-3">
           <Col md={6}>
             <Form.Group controlId="fullName">
@@ -107,7 +135,7 @@ export default function BookingDetailsPage() {
         </Form.Group>
 
         <div className="text-center">
-          <Button type="submit" variant="dark">
+          <Button type="submit" variant="dark" className={styles.submitButton}>
             Continue to Payment
           </Button>
         </div>

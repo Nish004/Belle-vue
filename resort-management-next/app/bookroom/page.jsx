@@ -1,4 +1,5 @@
 'use client';
+
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Container, Card, Button, Row, Col, Modal } from 'react-bootstrap';
@@ -7,32 +8,60 @@ import styles from './bookroom.module.css';
 
 const rooms = [
   {
-    id: 'classic',
+    id: 1,
+    type: 'classic',
     name: 'Classic Room',
     description: 'Cozy room with essential amenities.',
     image: '/assets/rooms/classic1.avif',
     price: 120
   },
   {
-    id: 'corner',
+    id: 2,
+    type: 'corner',
     name: 'Corner Room',
     description: 'Spacious room with corner views.',
     image: '/assets/rooms/corner2.avif',
     price: 150
   },
   {
-    id: 'superior',
+    id: 3,
+    type: 'superior',
     name: 'Superior Room',
     description: 'Elegant room with premium furnishings.',
     image: '/assets/rooms/superior1.jfif',
     price: 200
   },
   {
-    id: 'terrace',
+    id: 4,
+    type: 'Terrace',
     name: 'Terrace Room',
     description: 'Luxury room with private terrace.',
     image: '/assets/rooms/terrace1.jfif',
     price: 250
+  },
+  {
+    id: 5,
+    type: 'luxury_villa',
+    name: 'Lakeside Villa',
+    description: 'Private villa with panoramic lake views.',
+    image: '/assets/Gallery1.jfif',
+    price: 450
+  },
+  {
+    id: 6,
+    type: 'forest_suite',
+    name: 'Forest Suite',
+    description: 'Secluded suite nestled in the woods.',
+    image: '/assets/Gallery2.jfif',
+    price: 350
+  },
+  {
+    id: 7,
+    type: 'executive_room',
+    name: 'Executive Room',
+    description: 'Luxurious comfort with modern amenities.',
+    image: '/assets/Gallery3.jfif',
+    price: 275
   }
 ];
 
@@ -42,6 +71,14 @@ export default function BookRoomPage() {
   const router = useRouter();
 
   const handleBookClick = (room) => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert('Please login to book a room');
+      router.push('/login');
+      return;
+    }
+
+    localStorage.setItem('selectedRoom', JSON.stringify(room));
     setSelectedRoom(room);
     setShowModal(true);
   };
@@ -52,6 +89,16 @@ export default function BookRoomPage() {
   };
 
   const handleConfirm = () => {
+    if (!selectedRoom) return;
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert('Please login first');
+      router.push('/login');
+      return;
+    }
+
+    localStorage.setItem('selectedRoom', JSON.stringify(selectedRoom));
     router.push('/booking/details');
   };
 
@@ -67,8 +114,8 @@ export default function BookRoomPage() {
                   src={room.image}
                   alt={room.name}
                   layout="fill"
-                  className={styles.roomImage}
                   objectFit="cover"
+                  className="rounded-top"
                 />
               </div>
               <Card.Body className="d-flex flex-column">

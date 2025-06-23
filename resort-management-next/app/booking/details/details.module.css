@@ -3,15 +3,15 @@
   margin: 0 auto;
 }
 
-input,
-select {
+.formWrapper input,
+.formWrapper select {
   padding: 10px;
   border-radius: 8px;
   border: 1px solid #ccc;
 }
 
-input:focus,
-select:focus {
+.formWrapper input:focus,
+.formWrapper select:focus {
   border-color: #333;
   outline: none;
 }

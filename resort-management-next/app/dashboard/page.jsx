@@ -1,12 +1,22 @@
-'use client';
+import ProfileDetails from '@/components/ProfileDetails';
+import BookingHistory from '@/components/BookingHistory';
+import ChangePasswordForm from '@/components/ChangePasswordForm';
+import DeleteAccountButton from '@/components/DeleteAccountButton';
+import LogoutButton from '@/components/LogoutButton';
 
 export default function DashboardPage() {
-  const username = typeof window !== 'undefined' ? localStorage.getItem('username') : null;
-
   return (
     <div style={{ padding: '2rem' }}>
-      <h1>Welcome to Dashboard</h1>
-      <p>Hello, {username || 'Guest'}!</p>
+      
+      <ProfileDetails />
+      <BookingHistory />
+      <ChangePasswordForm />
+      <DeleteAccountButton />
+      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+      <LogoutButton />
+      </div>
     </div>
   );
 }
+
+
