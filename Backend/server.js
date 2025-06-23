@@ -24,11 +24,16 @@ db.connect()
     console.error('Database connection error:', error.message);
     process.exit(1); // Exit the process with failure
   });
+  
+const authRoutes = require('./routes/auth');  // ✅ Add this import
+app.use('/api/auth', authRoutes);             // ✅ Register the routes
+
 
 // Debugging: Log database connection details (consider removing in production)
 console.log('DB_HOST:', process.env.DB_HOST);
 console.log('DB_USER:', process.env.DB_USER);
 console.log('DB_NAME:', process.env.DB_NAME);
+
 
 // Error handling middleware
 app.use((error, req, res, next) => {
@@ -40,3 +45,4 @@ app.use((error, req, res, next) => {
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
