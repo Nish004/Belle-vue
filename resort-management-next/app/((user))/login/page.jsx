@@ -26,21 +26,20 @@ export default function LoginPage() {
       const data = await res.json();
 
       if (res.ok) {
-        // ✅ Save JWT to localStorage
-        localStorage.setItem('token', data.token);
-        window.location.href = '/dashboard'; // This reloads and re-runs context
-        
-        // ✅ Decode JWT to get user info
-        const payload = JSON.parse(atob(data.token.split('.')[1]));
-        localStorage.setItem('user', JSON.stringify(payload)); 
-        console.log(payload)
-        alert('Login successful!');
-        if (payload.role === 'user')
-        router.push('/dashboard');
-        else router.push('/admin')
-      } else {
-        alert(data.error || 'Login failed');
-      }
+  const payload = JSON.parse(atob(data.token.split('.')[1]));
+  localStorage.setItem('token', data.token);
+  localStorage.setItem('user', JSON.stringify(payload)); 
+  console.log(payload);
+
+  alert('Login successful!');
+
+  if (payload.role === 'admin') {
+    router.push('/admin');
+  } else {
+    router.push('/dashboard');
+  }
+}
+
     } catch (err) {
       console.error(err);
       alert('Network error');

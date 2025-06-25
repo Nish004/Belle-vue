@@ -1,28 +1,10 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './globals.css'; 
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
-import { UserProvider } from '@/context/UserContext';
+// app/layout.jsx
+import './globals.css';
 
 export const metadata = {
-  title: 'Resort Management',
+  title: 'Belle Vue Resort',
 };
 
 export default function RootLayout({ children }) {
-  return (
-    <html lang="en" suppressHydrationWarning>
-      <body suppressHydrationWarning className="no-js">
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `document.body.classList.remove('no-js')`,
-          }}
-        />
-        <UserProvider>
-          <Navbar />
-          <main>{children}</main>
-          <Footer />
-        </UserProvider>
-      </body>
-    </html>
-  );
+  return <>{children}</>;  // ✅ just return children
 }

@@ -103,58 +103,63 @@ export default function BookRoomPage() {
   };
 
   return (
-    <Container className="py-5 mt-5" style={{ paddingTop: '100px' }}>
-      <h2 className="text-center mb-4">Book Your Stay</h2>
-      <Row className="g-4">
-        {rooms.map((room) => (
-          <Col key={room.id} md={6} lg={3}>
-            <Card className="h-100 shadow-sm">
-              <div className={styles.imageWrapper}>
-                <Image
-                  src={room.image}
-                  alt={room.name}
-                  layout="fill"
-                  objectFit="cover"
-                  className="rounded-top"
-                />
-              </div>
-              <Card.Body className="d-flex flex-column">
-                <Card.Title>{room.name}</Card.Title>
-                <Card.Text>{room.description}</Card.Text>
-                <div className="mt-auto">
-                  <p><strong>${room.price}</strong> / night</p>
-                  <Button variant="dark" onClick={() => handleBookClick(room)}>
-                    Book Now
-                  </Button>
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
+   <div className={styles.wrapper}>
+  <Container className={styles.container}>
+    <div className={styles.headingWrapper}>
+      <h2 className={styles.title}>Book Your Stay</h2>
+    </div>
 
-      <Modal show={showModal} onHide={handleClose} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Confirm Room</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {selectedRoom && (
-            <>
-              <h5>{selectedRoom.name}</h5>
-              <p>{selectedRoom.description}</p>
-              <p><strong>${selectedRoom.price}</strong> per night</p>
-            </>
-          )}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Cancel
-          </Button>
-          <Button variant="dark" onClick={handleConfirm}>
-            Continue to Details
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </Container>
+    <Row className="g-4">
+      {rooms.map((room) => (
+        <Col key={room.id} xs={12} sm={6} md={6} lg={3}>
+          <Card className={`h-100 shadow-sm ${styles.card}`}>
+            <div className={styles.imageWrapper}>
+<Image
+  src={room.image}
+  alt={room.name}
+  width={400}
+  height={250}
+  style={{ objectFit: 'cover', borderTopLeftRadius: '1rem', borderTopRightRadius: '1rem' }}
+  className="w-100"
+/>
+
+            </div>
+            <Card.Body className={styles.cardBody}>
+              <Card.Title>{room.name}</Card.Title>
+              <Card.Text>{room.description}</Card.Text>
+              <div className="mt-auto">
+                <p className={styles.price}>${room.price} / night</p>
+                <Button className={styles.buttonDark} onClick={() => handleBookClick(room)}>
+                  Book Now
+                </Button>
+              </div>
+            </Card.Body>
+          </Card>
+        </Col>
+      ))}
+    </Row>
+
+    {/* Your Modal */}
+    <Modal show={showModal} onHide={handleClose} centered>
+      <Modal.Header closeButton>
+        <Modal.Title>Confirm Room</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        {selectedRoom && (
+          <>
+            <h5>{selectedRoom.name}</h5>
+            <p>{selectedRoom.description}</p>
+            <p><strong>${selectedRoom.price}</strong> per night</p>
+          </>
+        )}
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={handleClose}>Cancel</Button>
+        <Button variant="dark" onClick={handleConfirm}>Continue to Details</Button>
+      </Modal.Footer>
+    </Modal>
+  </Container>
+</div>
+
   );
 }

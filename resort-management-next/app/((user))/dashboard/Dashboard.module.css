@@ -1,0 +1,31 @@
+/* Dashboard.module.css */
+.container {
+  padding: 6rem 2rem 2rem 2rem; /* top padding increased to account for fixed navbar */
+  background-color: #fff;
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+
+.section {
+  background-color: #ffffff;
+  border: 1px solid #f1f1f1;
+  border-left: 6px solid #FFD700; /* Golf yellow accent */
+  border-radius: 1.25rem; /* inn-curve */
+  padding: 1.5rem 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.2s ease;
+}
+
+.section:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.logoutContainer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}

@@ -1,0 +1,87 @@
+/* bookroom.module.css */
+
+.container {
+  padding-top: 7rem; /* leaves room under navbar */
+  padding-bottom: 3rem;
+  background-color: #fff;
+}
+
+.title {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #222; /* Professional, not too harsh */
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.title::after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 4px;
+  background-color: #FFD700; /* Gold yellow underline */
+  margin: 0.5rem auto 0 auto;
+  border-radius: 2px;
+}
+
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+}
+
+.imageWrapper img {
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.imageWrapper:hover img {
+  transform: scale(1.05);
+}
+
+.card {
+  border: none;
+  border-radius: 1rem;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden;
+  background-color: #ffffff;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+}
+
+.cardBody {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.price {
+  font-weight: 600;
+  color: #FFD700; /* Gold yellow accent */
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.buttonDark {
+  background-color: #212529;
+  border: none;
+  color: white;
+  padding: 0.5rem 1.2rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s ease;
+}
+
+.buttonDark:hover {
+  background-color: #000;
+}
+
