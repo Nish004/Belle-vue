@@ -1,4 +1,4 @@
-import { pool } from '@/app/config/db';
+import { pool } from '@/config/db';
 import { verifyAdminRequest } from '@/lib/verifyAdmin'; // 🛡️ Admin check
 
 export async function GET(req, { params }) {

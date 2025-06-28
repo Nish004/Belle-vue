@@ -25,21 +25,22 @@ export default function LoginPage() {
 
       const data = await res.json();
 
-      if (res.ok) {
-  const payload = JSON.parse(atob(data.token.split('.')[1]));
-  localStorage.setItem('token', data.token);
-  localStorage.setItem('user', JSON.stringify(payload)); 
-  console.log(payload);
+      if (!res.ok) {
+        alert(data.error || 'Invalid email or password');
+        return;
+      }
 
-  alert('Login successful!');
+      const payload = JSON.parse(atob(data.token.split('.')[1]));
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(payload));
 
-  if (payload.role === 'admin') {
-    router.push('/admin');
-  } else {
-    router.push('/dashboard');
-  }
-}
+      alert('Login successful!');
 
+      if (payload.role === 'admin') {
+        router.push('/admin');
+      } else {
+        router.push('/dashboard');
+      }
     } catch (err) {
       console.error(err);
       alert('Network error');

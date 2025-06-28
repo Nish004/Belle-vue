@@ -1,5 +1,5 @@
 import { verifyAdminRequest } from '../../../../lib/verifyAdminRequest';
-import { pool } from '../../../config/db';
+import { pool } from '@/config/db';
 
 export async function GET(req) {
   try {

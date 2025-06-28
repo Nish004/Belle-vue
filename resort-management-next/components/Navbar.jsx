@@ -91,10 +91,11 @@ function ResortNavbar() {
                 </>
               ) : (
                 <>
-                  <Nav.Link href="/dashboard" className={styles.usernameLink}>
-                    {username}
-                  </Nav.Link>
-                  
+                {username && username.toLowerCase() !== 'admin' ? (
+                <Nav.Link href="/dashboard" className={styles.usernameLink}>
+                     {username}
+                 </Nav.Link>
+               ) : null}        
                 </>
               )}
             </Nav>

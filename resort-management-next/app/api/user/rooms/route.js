@@ -1,4 +1,4 @@
-import { pool } from '@/app/config/db';
+import { pool } from '@/config/db';
 import { NextResponse } from 'next/server';
 
 // GET all rooms

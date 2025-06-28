@@ -1,5 +1,5 @@
 // FILE: /app/api/user/profile/route.js
-import { pool } from '@/app/config/db';
+import { pool } from '@/config/db';
 import jwt from 'jsonwebtoken';
 
 export async function GET(req) {

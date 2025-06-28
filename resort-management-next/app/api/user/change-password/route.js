@@ -1,5 +1,5 @@
 // FILE: /app/api/user/change-password/route.js
-import { pool } from '@/app/config/db';
+import { pool } from '@/config/db';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 

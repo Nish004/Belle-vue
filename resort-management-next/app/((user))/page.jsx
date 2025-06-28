@@ -1,11 +1,10 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Carousel, Container, Button, Modal } from 'react-bootstrap';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './page.module.css';
 
-// Image paths
 const hero1 = '/assets/hero1.jpg';
 const hero2 = '/assets/hero2.jfif';
 const hero3 = '/assets/hero3.jfif';
@@ -78,11 +77,29 @@ const handleProtectedRoute = (href) => {
 export default function Home() {
   const [showModal, setShowModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null); // removed :string | null
+  const [isClient, setIsClient] = useState(false);
+
+    useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+    const handleProtectedRoute = (href) => {
+    if (!isClient) return;
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert('Please login to continue');
+      window.location.href = '/login';
+    } else {
+      window.location.href = href;
+    }
+  };
 
   const openImageModal = (img) => { // removed : string
     setSelectedImage(img);
     setShowModal(true);
-  };
+  }; 
+  
 
   return (
     <div className={styles.belleVueHome}>

@@ -35,7 +35,7 @@ export default function AdminDashboard() {
       <ul style={{ marginTop: '2rem' }}>
         <li><a href="/admin/users">👤 View All Users</a></li>
         <li><a href="/admin/bookings">📆 View All Bookings</a></li>
-        <li><a href="/admin/rooms">🏨 Manage Rooms</a></li>
+        <li><a href="/admin/room">🏨 Manage Rooms</a></li>
       </ul>
       <button
   onClick={() => {

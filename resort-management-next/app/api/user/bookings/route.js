@@ -1,4 +1,4 @@
-import { pool } from '@/app/config/db';
+import { pool } from '@/config/db';
 import jwt from 'jsonwebtoken';
 import { NextResponse } from 'next/server';
 
