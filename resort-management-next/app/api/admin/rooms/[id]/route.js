@@ -1,12 +1,11 @@
-import { verifyAdminRequest } from '../../../../../lib/verifyAdminRequest';
+import { verifyAdminRequest } from '@/lib/verifyAdminRequest';
 import { pool } from '@/config/db';
 
-export async function GET(req, context) {
-  const { params } = context;
+export async function GET(req, { params }) {
   try {
     await verifyAdminRequest(req);
-    const roomId = params.id;
 
+    const roomId = params?.id;
     const [rows] = await pool.query(
       'SELECT id, name, price, description, image AS image_url FROM rooms WHERE id = ?',
       [roomId]
@@ -23,14 +22,13 @@ export async function GET(req, context) {
   }
 }
 
-export async function PUT(req, context) {
-  const { params } = context;
+export async function PUT(req, { params }) {
   try {
     await verifyAdminRequest(req);
-    const roomId = params.id;
+    const roomId = params?.id;
     const { name, price, description, image_url } = await req.json();
 
-    const [result] = await pool.query(
+    await pool.query(
       'UPDATE rooms SET name = ?, price = ?, description = ?, image = ? WHERE id = ?',
       [name, price, description, image_url, roomId]
     );
@@ -42,11 +40,10 @@ export async function PUT(req, context) {
   }
 }
 
-export async function DELETE(req, context) {
-  const { params } = context;
+export async function DELETE(req, { params }) {
   try {
     await verifyAdminRequest(req);
-    const roomId = params.id;
+    const roomId = params?.id;
 
     const [result] = await pool.query('DELETE FROM rooms WHERE id = ?', [roomId]);
 

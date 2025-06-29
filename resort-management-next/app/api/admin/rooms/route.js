@@ -11,7 +11,6 @@ export const config = {
   },
 };
 
-// 🛠️ Convert Next.js Request to Node stream for formidable
 function toNodeReadable(req) {
   const body = req.body;
   if (!body || typeof body !== 'object') {
@@ -22,16 +21,15 @@ function toNodeReadable(req) {
   stream.headers = Object.fromEntries(req.headers.entries());
   stream.method = req.method;
   stream.url = req.url;
-
   return stream;
 }
 
+// 🟩 POST → Add room
 export async function POST(req) {
   try {
     await verifyAdminRequest(req);
 
-    const nodeReq = toNodeReadable(req); // 🔥 Convert to Node request
-
+    const nodeReq = toNodeReadable(req);
     const form = new IncomingForm();
     const uploadDir = path.join(process.cwd(), 'public', 'uploads');
     await fs.mkdir(uploadDir, { recursive: true });
@@ -68,6 +66,31 @@ export async function POST(req) {
     console.error('[ADD ROOM ERROR]', err);
     return new Response(
       JSON.stringify({ error: err.message || 'Failed to add room' }),
+      {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
+  }
+}
+
+// 🟦 GET → Admin: View all rooms
+export async function GET(req) {
+  try {
+    await verifyAdminRequest(req); // 🔒 Only admin can view this
+
+    const [rooms] = await pool.query(
+      'SELECT id, name, price, description, image AS image_url FROM rooms'
+    );
+
+    return new Response(JSON.stringify(rooms), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  } catch (err) {
+    console.error('[ADMIN GET ROOMS ERROR]', err);
+    return new Response(
+      JSON.stringify({ error: err.message || 'Failed to fetch rooms' }),
       {
         status: 500,
         headers: { 'Content-Type': 'application/json' },
