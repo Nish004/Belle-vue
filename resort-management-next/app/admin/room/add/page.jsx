@@ -45,9 +45,16 @@ export default function AddRoomPage() {
         body: formData,
       });
 
-      const result = await res.json();
+      let result = {};
+      try {
+        result = await res.json();
+      } catch {
+        result = { error: 'Server returned no data' };
+      }
+
       if (!res.ok) throw new Error(result.error || 'Upload failed');
-      router.push('/admin/rooms');
+      alert('Room added successfully!');
+      router.push('/admin/room');
     } catch (err) {
       console.error('Upload failed:', err);
       alert('Error: ' + err.message);
