@@ -1,11 +1,11 @@
-import { pool } from '@/config/db';
+import db from '@/config/db';
 import { verifyAdminRequest } from '@/lib/verifyAdmin'; // 🛡️ Importing admin protection
 
 export async function GET(req) {
   try {
     const admin = verifyAdminRequest(req); // 🛡️ Only admins allowed
 
-    const [rows] = await pool.query(
+    const [rows] = await db.execute(
       `SELECT id, name, email, password, phone, address, pincode, role, created_at 
        FROM users 
        WHERE role != 'admin'

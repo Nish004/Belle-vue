@@ -1,4 +1,4 @@
-import { pool } from '@/config/db';
+import db from '@/config/db';
 import { verifyAdminRequest } from '@/lib/verifyAdmin'; // 🛡️ Admin check
 
 export async function GET(req, { params }) {
@@ -6,12 +6,12 @@ export async function GET(req, { params }) {
     const admin = verifyAdminRequest(req); // 🛡️ Protect route
     const userId = params.id;
 
-    const [[user]] = await pool.query(
+    const [[user]] = await db.execute(
       'SELECT id, name, email, phone, address, pincode, created_at FROM users WHERE id = ?',
       [userId]
     );
 
-    const [bookings] = await pool.query(
+    const [bookings] = await db.execute(
       `SELECT b.*, r.name AS room_name
        FROM bookings b
        JOIN rooms r ON b.room_id = r.id
@@ -34,10 +34,10 @@ export async function DELETE(req, { params }) {
     const userId = params.id;
 
     // First delete user's bookings (foreign key constraint)
-    await pool.query('DELETE FROM bookings WHERE user_id = ?', [userId]);
+    await db.execute('DELETE FROM bookings WHERE user_id = ?', [userId]);
 
     // Then delete the user
-    await pool.query('DELETE FROM users WHERE id = ?', [userId]);
+    await db.execute('DELETE FROM users WHERE id = ?', [userId]);
 
     return new Response(JSON.stringify({ message: 'User deleted successfully' }), { status: 200 });
   } catch (err) {

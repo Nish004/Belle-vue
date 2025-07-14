@@ -1,12 +1,12 @@
 import { verifyAdminRequest } from '@/lib/verifyAdminRequest';
-import { pool } from '@/config/db';
+import db from '@/config/db';
 
 export async function GET(req, { params }) {
   try {
     await verifyAdminRequest(req);
 
     const roomId = params?.id;
-    const [rows] = await pool.query(
+    const [rows] = await db.execute(
       'SELECT id, name, price, description, image AS image_url FROM rooms WHERE id = ?',
       [roomId]
     );
@@ -28,7 +28,7 @@ export async function PUT(req, { params }) {
     const roomId = params?.id;
     const { name, price, description, image_url } = await req.json();
 
-    await pool.query(
+    await db.execute(
       'UPDATE rooms SET name = ?, price = ?, description = ?, image = ? WHERE id = ?',
       [name, price, description, image_url, roomId]
     );
@@ -45,7 +45,7 @@ export async function DELETE(req, { params }) {
     await verifyAdminRequest(req);
     const roomId = params?.id;
 
-    const [result] = await pool.query('DELETE FROM rooms WHERE id = ?', [roomId]);
+    const [result] = await db.execute('DELETE FROM rooms WHERE id = ?', [roomId]);
 
     if (result.affectedRows === 0) {
       return Response.json({ error: 'Room not found' }, { status: 404 });

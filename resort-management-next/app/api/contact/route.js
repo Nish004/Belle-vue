@@ -1,4 +1,4 @@
-import { pool } from '@/config/db';
+import db from '@/config/db';
 
 export async function POST(req) {
   try {
@@ -8,7 +8,7 @@ export async function POST(req) {
       return new Response(JSON.stringify({ error: 'Missing fields' }), { status: 400 });
     }
 
-    await pool.query(
+    await db.execute(
       'INSERT INTO messages (name, email, message) VALUES (?, ?, ?)',
       [name, email, message]
     );

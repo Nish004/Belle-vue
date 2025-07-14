@@ -1,11 +1,11 @@
-import { pool } from '@/config/db';
+import db from '@/config/db';
 import { verifyAdminRequest } from '@/lib/verifyAdminRequest';
 
 export async function GET(req) {
   try {
     await verifyAdminRequest(req);
 
-    const [rows] = await pool.query(
+    const [rows] = await db.execute(
       'SELECT id, name, email, message, created_at FROM messages ORDER BY created_at DESC'
     );
 

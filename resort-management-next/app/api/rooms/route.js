@@ -1,7 +1,7 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 import { IncomingForm } from 'formidable';
-import { pool } from '@/config/db';
+import db from '@/config/db';
 import { verifyAdminRequest } from '@/lib/verifyAdminRequest';
 
 export const config = {
@@ -40,7 +40,7 @@ export async function POST(req) {
       image_url = `/uploads/${fileName}`;
     }
 
-    await pool.query(
+    await db.execute(
       'INSERT INTO rooms (name, price, description, image) VALUES (?, ?, ?, ?)',
       [name[0], price[0], description[0], image_url]
     );
@@ -57,7 +57,7 @@ export async function POST(req) {
 // 🟦 GET → Fetch all rooms (user)
 export async function GET() {
   try {
-    const [rooms] = await pool.query(
+    const [rooms] = await db.execute(
       'SELECT id, name, price, description, image AS image_url FROM rooms'
     );
 

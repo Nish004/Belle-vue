@@ -1,5 +1,5 @@
 // FILE: /app/api/user/profile/route.js
-import { pool } from '@/config/db';
+import db from '@/config/db';
 import jwt from 'jsonwebtoken';
 
 export async function GET(req) {
@@ -8,7 +8,7 @@ export async function GET(req) {
     const user = jwt.verify(token, process.env.JWT_SECRET);
 
 
-    const [rows] = await pool.query('SELECT name, email, address, pincode, phone FROM users WHERE id = ?', [user.id]);
+    const [rows] = await db.execute('SELECT name, email, address, pincode, phone FROM users WHERE id = ?', [user.id]);
     return Response.json(rows[0]);
   } catch (err) {
     return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401 });
@@ -22,7 +22,7 @@ export async function PUT(req) {
     const body = await req.json();
     const { name, address, pincode, phone } = body;
 
-    await pool.query(
+    await db.execute(
       'UPDATE users SET name=?, address=?, pincode=?, phone=? WHERE id=?',
       [name, address, pincode, phone, user.id]
     );

@@ -1,10 +1,10 @@
 // ✅ correct
-import { pool } from '@/config/db';
+import db from '@/config/db';
 
 export async function GET(req, { params }) {
   try {
     console.log('[PUBLIC] Get single room:', params.id);
-    const [rows] = await pool.query('SELECT id, name, type, description, image AS image_url, price FROM rooms WHERE id = ?', [params.id]);
+    const [rows] = await db.execute('SELECT id, name, type, description, image AS image_url, price FROM rooms WHERE id = ?', [params.id]);
     if (rows.length === 0) {
       return Response.json({ error: 'Room not found' }, { status: 404 });
     }

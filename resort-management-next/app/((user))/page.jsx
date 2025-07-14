@@ -4,6 +4,7 @@ import { Carousel, Container, Button, Modal } from 'react-bootstrap';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './page.module.css';
+import FeedbackSection from "@/components/FeedbackSection";
 
 const hero1 = '/assets/hero1.jpg';
 const hero2 = '/assets/hero2.jfif';
@@ -358,6 +359,15 @@ Discover More
           </div>
         </Container>
       </section>
+      {/* FEEDBACK SECTION UNDER GALLERY */}
+<FeedbackSection
+  user={
+    typeof window !== "undefined" && localStorage.getItem("token")
+      ? { id: 1 } // Replace with real decoded user ID later
+      : null
+  }
+/>
+
 
       {/* Image Modal */}
       <Modal 
