@@ -6,30 +6,43 @@ export default function FeedbackForm({ userId, bookingId }) {
   const [comment, setComment] = useState("");
 
   const submitFeedback = async () => {
-    if (!comment) return alert("Please enter your feedback.");
+  if (!comment) return alert("Please enter your feedback.");
 
+  try {
     const res = await fetch("/api/feedback", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`, // 🛡️ send JWT token
       },
       body: JSON.stringify({
-        user_id: userId,
-        booking_id: bookingId,
         rating,
         comment,
+        booking_id: bookingId,
       }),
     });
 
-    const data = await res.json();
-    if (data.success) {
+    const text = await res.text(); // 🧠 safer fallback
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch (e) {
+      throw new Error("Invalid JSON response");
+    }
+
+    if (res.ok && data?.success) {
       alert("Feedback submitted!");
       setComment("");
       setRating(5);
     } else {
-      alert("Error submitting feedback");
+      alert("Error submitting feedback: " + (data?.error || "Unknown error"));
     }
-  };
+  } catch (err) {
+    console.error("Feedback submit error:", err.message);
+    alert("Something went wrong. Try again.");
+  }
+};
+
 
   return (
     <div className="border p-4 rounded-md shadow-md w-full mt-6">

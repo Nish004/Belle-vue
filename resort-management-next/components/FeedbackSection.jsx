@@ -7,32 +7,34 @@ export default function FeedbackSection({ user }) {
   const [canSubmit, setCanSubmit] = useState(false);
 
   useEffect(() => {
-    // Fetch all feedbacks
+    // 1. Fetch All Feedbacks (open to all users)
     fetch("/api/feedback")
       .then(async (res) => {
-        if (!res.ok) throw new Error("Failed to fetch feedbacks");
         const data = await res.json();
+        console.log("Fetched feedbacks:", data.feedbacks);
+console.log("Fetched feedbacks:", data.feedbacks);
+
         setFeedbacks(data.feedbacks || []);
       })
-      .catch((err) => {
-        console.error("Feedback fetch error:", err.message);
-        setFeedbacks([]);
-      });
+      .catch(() => setFeedbacks([]));
 
-    // Check if user is eligible to submit feedback
+    // 2. If logged in, check if they have at least 1 approved booking
     if (user) {
-      fetch(`/api/bookings/user/${user.id}`)
+      fetch("/api/user/bookings", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
         .then(async (res) => {
-          if (!res.ok) throw new Error("Booking fetch failed");
-          const data = await res.json();
-          if (data.bookings?.length > 0) {
-            setCanSubmit(true);
-          }
+          const bookings = await res.json();
+
+          const hasApproved = bookings.some(
+            (b) => b.status && b.status.toLowerCase() === "approved"
+          );
+
+          if (hasApproved) setCanSubmit(true);
         })
-        .catch((err) => {
-          console.error("Booking check error:", err.message);
-          setCanSubmit(false);
-        });
+        .catch(() => setCanSubmit(false));
     }
   }, [user]);
 
@@ -61,7 +63,7 @@ export default function FeedbackSection({ user }) {
           <FeedbackForm userId={user.id} bookingId={null} />
         ) : (
           <p className="text-center text-gray-500 italic">
-            You need to book a room before leaving feedback.
+            You need at least one approved booking to leave feedback.
           </p>
         )
       ) : (

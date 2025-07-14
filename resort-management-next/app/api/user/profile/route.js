@@ -7,13 +7,19 @@ export async function GET(req) {
     const token = req.headers.get('authorization')?.split(' ')[1];
     const user = jwt.verify(token, process.env.JWT_SECRET);
 
+    console.log("🔐 Decoded JWT user:", user); // 👈 Add this line
 
-    const [rows] = await db.execute('SELECT name, email, address, pincode, phone FROM users WHERE id = ?', [user.id]);
+    const [rows] = await db.execute(
+      'SELECT name, email, address, pincode, phone FROM users WHERE id = ?',
+      [user.id]
+    );
     return Response.json(rows[0]);
   } catch (err) {
+    console.error("❌ JWT Verification error:", err.message);
     return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401 });
   }
 }
+
 
 export async function PUT(req) {
   try {
