@@ -19,7 +19,7 @@ export default function AdminDashboard() {
       alert('You are not authorized');
       return router.push('/dashboard');
     }
-    setAdmin(user); // Set admin data like name/email
+    setAdmin(user);
   }, []);
 
   if (!admin) return <p>Loading admin dashboard...</p>;
@@ -31,11 +31,12 @@ export default function AdminDashboard() {
       <p>Email: {admin.email}</p>
 
       {/* 🔗 Links to admin features */}
-      <ul style={{ marginTop: '2rem' }}>
+      <ul style={{ marginTop: '2rem', lineHeight: '2' }}>
         <li><a href="/admin/users">👤 View All Users</a></li>
         <li><a href="/admin/bookings">📆 View All Bookings</a></li>
         <li><a href="/admin/room">🏨 Manage Rooms</a></li>
-        <li><a href="/admin/messages">📩 View Contact Messages</a></li> {/* ✅ Added */}
+        <li><a href="/admin/messages">📩 View Contact Messages</a></li>
+        <li><a href="/admin/feedbacks">💬 View & Reply Feedback</a></li> {/* ✅ New link */}
       </ul>
 
       <button

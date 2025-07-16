@@ -7,18 +7,16 @@ export default function FeedbackSection({ user }) {
   const [canSubmit, setCanSubmit] = useState(false);
 
   useEffect(() => {
-    // 1. Fetch All Feedbacks (open to all users)
+    // 1. Fetch All Feedbacks
     fetch("/api/feedback")
       .then(async (res) => {
         const data = await res.json();
         console.log("Fetched feedbacks:", data.feedbacks);
-console.log("Fetched feedbacks:", data.feedbacks);
-
         setFeedbacks(data.feedbacks || []);
       })
       .catch(() => setFeedbacks([]));
 
-    // 2. If logged in, check if they have at least 1 approved booking
+    // 2. Check if user has at least one approved booking
     if (user) {
       fetch("/api/user/bookings", {
         headers: {
@@ -27,11 +25,9 @@ console.log("Fetched feedbacks:", data.feedbacks);
       })
         .then(async (res) => {
           const bookings = await res.json();
-
           const hasApproved = bookings.some(
             (b) => b.status && b.status.toLowerCase() === "approved"
           );
-
           if (hasApproved) setCanSubmit(true);
         })
         .catch(() => setCanSubmit(false));
@@ -46,7 +42,7 @@ console.log("Fetched feedbacks:", data.feedbacks);
         <p className="text-center text-gray-500">No feedbacks yet.</p>
       ) : (
         feedbacks.map((fb) => (
-          <div key={fb.id} className="border-b pb-3 mb-3">
+          <div key={`fb-${fb.feedback_id}`} className="border-b pb-4 mb-4">
             <p>
               <strong>{fb.username}</strong> rated: {fb.rating}⭐
             </p>
@@ -54,6 +50,21 @@ console.log("Fetched feedbacks:", data.feedbacks);
             <p className="text-sm text-gray-400">
               {new Date(fb.created_at).toLocaleString()}
             </p>
+
+            {/* Show admin reply if exists */}
+            {fb.reply && (
+              <div className="mt-2 bg-gray-100 p-3 rounded">
+                <p className="text-sm text-gray-600">
+                  <strong>Admin Reply:</strong> {fb.reply}
+                </p>
+                {fb.reply_created_at && (
+                  <p className="text-xs text-gray-400 mt-1">
+                    Replied by <strong>{fb.admin_name || "Admin"}</strong> on{" "}
+                    {new Date(fb.reply_created_at).toLocaleString()}
+                  </p>
+                )}
+              </div>
+            )}
           </div>
         ))
       )}
@@ -67,7 +78,9 @@ console.log("Fetched feedbacks:", data.feedbacks);
           </p>
         )
       ) : (
-        <p className="text-center text-gray-500 italic">Please log in to leave feedback.</p>
+        <p className="text-center text-gray-500 italic">
+          Please log in to leave feedback.
+        </p>
       )}
     </div>
   );

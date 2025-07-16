@@ -2,15 +2,24 @@ import db from '@/config/db';
 import jwt from 'jsonwebtoken';
 import { NextResponse } from 'next/server';
 
-// 🟢 GET all feedbacks
 export async function GET() {
   try {
     const [rows] = await db.execute(`
       SELECT 
-        f.id, f.user_id, f.booking_id, f.rating, f.comment, f.created_at,
-        u.name AS username
+        f.id AS feedback_id,
+        f.user_id,
+        f.booking_id,
+        f.rating,
+        f.comment,
+        f.created_at,
+        u.name AS username,
+        fr.reply,
+        fr.created_at AS reply_created_at,
+        a.name AS admin_name
       FROM feedback f
       JOIN users u ON f.user_id = u.id
+      LEFT JOIN feedback_reply fr ON fr.feedback_id = f.id
+      LEFT JOIN users a ON fr.admin_id = a.id
       ORDER BY f.created_at DESC
     `);
 
@@ -20,6 +29,7 @@ export async function GET() {
     return NextResponse.json({ error: 'Failed to fetch feedback' }, { status: 500 });
   }
 }
+
 
 // 🟡 POST new feedback
 export async function POST(req) {
