@@ -10,9 +10,11 @@ export default function PaymentPage() {
   const [expiry, setExpiry] = useState('');
   const [cvv, setCvv] = useState('');
   const [name, setName] = useState('');
+  const [upiTxnId, setUpiTxnId] = useState('');
   const [selectedRoom, setSelectedRoom] = useState(null);
   const [bookingDetails, setBookingDetails] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState('card'); // 'card' or 'gpay'
 
   useEffect(() => {
     const room = JSON.parse(localStorage.getItem('selectedRoom'));
@@ -99,6 +101,19 @@ export default function PaymentPage() {
     }
   };
 
+  const handleGPaySubmit = (e) => {
+    e.preventDefault();
+    if (!upiTxnId) {
+      alert('Enter UPI Transaction ID');
+      return;
+    }
+    handlePayment(e); // simulate same as card
+  };
+
+  const total = selectedRoom && bookingDetails
+    ? selectedRoom.price * bookingDetails.guests * bookingDetails.nights
+    : '';
+
   return (
     <Container className="py-5 mt-5" style={{ paddingTop: '100px' }}>
       <h2 className="text-center mb-4">Payment Details</h2>
@@ -110,96 +125,125 @@ export default function PaymentPage() {
         </div>
       ) : (
         <>
-          {/* 💸 Breakdown Section */}
+          {/* 💸 Summary */}
           {selectedRoom && bookingDetails && (
             <Card className="p-4 mb-4 shadow-sm mx-auto" style={{ maxWidth: '600px' }}>
               <h5 className="mb-3">💡 Booking Summary</h5>
-              <p>
-                <strong>Room:</strong> {selectedRoom.name}
-              </p>
-              <p>
-                <strong>Price per Person per Night:</strong> ₹{selectedRoom.price}
-              </p>
-              <p>
-                <strong>Guests:</strong> {bookingDetails.guests}
-              </p>
-              <p>
-                <strong>Nights:</strong> {bookingDetails.nights}
-              </p>
-              <p>
-                <strong>Total Amount:</strong> ₹
-                {selectedRoom.price *
-                  bookingDetails.guests *
-                  bookingDetails.nights}
-              </p>
+              <p><strong>Room:</strong> {selectedRoom.name}</p>
+              <p><strong>Price per Person per Night:</strong> ${selectedRoom.price}</p>
+              <p><strong>Guests:</strong> {bookingDetails.guests}</p>
+              <p><strong>Nights:</strong> {bookingDetails.nights}</p>
+              <p><strong>Total:</strong> ${total}</p>
             </Card>
           )}
 
-          {/* 💳 Payment Form */}
-          <Card className="p-4 shadow-sm mx-auto" style={{ maxWidth: '500px' }}>
-            <Form onSubmit={handlePayment}>
-              <Form.Group className="mb-3" controlId="name">
-                <Form.Label>Cardholder Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Name on card"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                />
-              </Form.Group>
+          {/* 🔄 Payment Method Toggle */}
+          <div className="mb-4 text-center">
+            <Button
+              variant={paymentMethod === 'card' ? 'dark' : 'outline-dark'}
+              onClick={() => setPaymentMethod('card')}
+              className="me-2"
+            >
+              💳 Card
+            </Button>
+            <Button
+              variant={paymentMethod === 'gpay' ? 'dark' : 'outline-dark'}
+              onClick={() => setPaymentMethod('gpay')}
+            >
+              🟦 Google Pay / UPI
+            </Button>
+          </div>
 
-              <Form.Group className="mb-3" controlId="cardNumber">
-                <Form.Label>Card Number</Form.Label>
-                <Form.Control
-                  type="text"
-                  inputMode="numeric"
-                  placeholder="1234 5678 9012 3456"
-                  value={cardNumber}
-                  onChange={handleCardChange}
-                  required
-                />
-              </Form.Group>
+          {/* 💳 Card Form */}
+          {paymentMethod === 'card' && (
+            <Card className="p-4 shadow-sm mx-auto" style={{ maxWidth: '500px' }}>
+              <Form onSubmit={handlePayment}>
+                <Form.Group className="mb-3" controlId="name">
+                  <Form.Label>Cardholder Name</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Name on card"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                  />
+                </Form.Group>
 
-              <Row>
-                <Col md={6}>
-                  <Form.Group className="mb-3" controlId="expiry">
-                    <Form.Label>Expiry Date</Form.Label>
-                    <Form.Control
-                      type="text"
-                      inputMode="numeric"
-                      placeholder="MM/YY"
-                      value={expiry}
-                      onChange={handleExpiryChange}
-                      required
-                    />
-                  </Form.Group>
-                </Col>
-                <Col md={6}>
-                  <Form.Group className="mb-3" controlId="cvv">
-                    <Form.Label>CVV</Form.Label>
-                    <Form.Control
-                      type="password"
-                      inputMode="numeric"
-                      placeholder="123"
-                      value={cvv}
-                      onChange={handleCVVChange}
-                      required
-                    />
-                  </Form.Group>
-                </Col>
-              </Row>
+                <Form.Group className="mb-3" controlId="cardNumber">
+                  <Form.Label>Card Number</Form.Label>
+                  <Form.Control
+                    type="text"
+                    inputMode="numeric"
+                    placeholder="1234 5678 9012 3456"
+                    value={cardNumber}
+                    onChange={handleCardChange}
+                    required
+                  />
+                </Form.Group>
 
-              <Button variant="dark" type="submit" className="w-100">
-                Pay Now ₹
-                {selectedRoom && bookingDetails
-                  ? selectedRoom.price *
-                    bookingDetails.guests *
-                    bookingDetails.nights
-                  : ''}
-              </Button>
-            </Form>
-          </Card>
+                <Row>
+                  <Col md={6}>
+                    <Form.Group className="mb-3" controlId="expiry">
+                      <Form.Label>Expiry Date</Form.Label>
+                      <Form.Control
+                        type="text"
+                        inputMode="numeric"
+                        placeholder="MM/YY"
+                        value={expiry}
+                        onChange={handleExpiryChange}
+                        required
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col md={6}>
+                    <Form.Group className="mb-3" controlId="cvv">
+                      <Form.Label>CVV</Form.Label>
+                      <Form.Control
+                        type="password"
+                        inputMode="numeric"
+                        placeholder="123"
+                        value={cvv}
+                        onChange={handleCVVChange}
+                        required
+                      />
+                    </Form.Group>
+                  </Col>
+                </Row>
+
+                <Button variant="dark" type="submit" className="w-100">
+                  Pay Now ${total}
+                </Button>
+              </Form>
+            </Card>
+          )}
+
+          {/* 🟦 GPay Static UI */}
+          {paymentMethod === 'gpay' && (
+            <Card className="p-4 shadow-sm mx-auto text-center" style={{ maxWidth: '500px' }}>
+              <h5 className="mb-3">Scan to Pay with Google Pay / UPI</h5>
+              <img
+                src="https://api.qrserver.com/v1/create-qr-code/?data=bellevue@upi&size=200x200"
+                alt="UPI QR"
+                className="mx-auto mb-3"
+              />
+              <p><strong>UPI ID:</strong> bellevue@upi</p>
+              <Form onSubmit={handleGPaySubmit}>
+                <Form.Group className="mb-3" controlId="upiTxnId">
+                  <Form.Label>Enter UPI Transaction ID</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="e.g., UPI123456789"
+                    value={upiTxnId}
+                    onChange={(e) => setUpiTxnId(e.target.value)}
+                    required
+                  />
+                </Form.Group>
+                <Button type="submit" variant="success" className="w-100">
+                  Confirm Payment ${total}
+                </Button>
+              </Form>
+            </Card>
+          )}
         </>
       )}
     </Container>

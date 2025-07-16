@@ -63,7 +63,7 @@ export default function UserDetailsPage() {
                 <td>{b.room_name}</td>
                 <td>{new Date(b.check_in).toLocaleDateString()}</td>
                 <td>{new Date(b.check_out).toLocaleDateString()}</td>
-                <td>₹{b.total_price}</td>
+                <td>${b.total_price}</td>
                 <td>{b.status}</td>
                 <td>{new Date(b.created_at).toLocaleString()}</td>
               </tr>

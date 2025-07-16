@@ -92,7 +92,7 @@ export default function BookRoomPage() {
                   <Card.Title>{room.name}</Card.Title>
                   <Card.Text>{room.description}</Card.Text>
                   <div className="mt-auto">
-                    <p className={styles.price}>₹{room.price} / night</p>
+                    <p className={styles.price}>${room.price} / night</p>
                     <Button className={styles.buttonDark} onClick={() => handleBookClick(room)}>
                       Book Now
                     </Button>
@@ -120,7 +120,7 @@ export default function BookRoomPage() {
                 <h5>{selectedRoom.name}</h5>
                 <p>{selectedRoom.description}</p>
                 <p>
-                  <strong>₹{selectedRoom.price}</strong> per night
+                  <strong>${selectedRoom.price}</strong> per night
                 </p>
               </>
             )}
