@@ -56,13 +56,15 @@ export default function PaymentPage() {
       return;
     }
 
-    const total_price = Number(selectedRoom.price) * Number(bookingDetails.nights);
+    const total_price =
+      Number(selectedRoom.price) * Number(bookingDetails.nights) * Number(bookingDetails.guests);
 
     const payload = {
       room_id: selectedRoom.id,
       check_in: bookingDetails.check_in,
       check_out: bookingDetails.check_out,
-      total_price
+      guests: bookingDetails.guests,
+      total_price,
     };
 
     try {
@@ -72,9 +74,9 @@ export default function PaymentPage() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
       });
 
       const result = await res.json();
@@ -107,65 +109,98 @@ export default function PaymentPage() {
           <p className="mt-3">Processing your payment...</p>
         </div>
       ) : (
-        <Card className="p-4 shadow-sm mx-auto" style={{ maxWidth: '500px' }}>
-          <Form onSubmit={handlePayment}>
-            <Form.Group className="mb-3" controlId="name">
-              <Form.Label>Cardholder Name</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Name on card"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-              />
-            </Form.Group>
+        <>
+          {/* 💸 Breakdown Section */}
+          {selectedRoom && bookingDetails && (
+            <Card className="p-4 mb-4 shadow-sm mx-auto" style={{ maxWidth: '600px' }}>
+              <h5 className="mb-3">💡 Booking Summary</h5>
+              <p>
+                <strong>Room:</strong> {selectedRoom.name}
+              </p>
+              <p>
+                <strong>Price per Person per Night:</strong> ₹{selectedRoom.price}
+              </p>
+              <p>
+                <strong>Guests:</strong> {bookingDetails.guests}
+              </p>
+              <p>
+                <strong>Nights:</strong> {bookingDetails.nights}
+              </p>
+              <p>
+                <strong>Total Amount:</strong> ₹
+                {selectedRoom.price *
+                  bookingDetails.guests *
+                  bookingDetails.nights}
+              </p>
+            </Card>
+          )}
 
-            <Form.Group className="mb-3" controlId="cardNumber">
-              <Form.Label>Card Number</Form.Label>
-              <Form.Control
-                type="text"
-                inputMode="numeric"
-                placeholder="1234 5678 9012 3456"
-                value={cardNumber}
-                onChange={handleCardChange}
-                required
-              />
-            </Form.Group>
+          {/* 💳 Payment Form */}
+          <Card className="p-4 shadow-sm mx-auto" style={{ maxWidth: '500px' }}>
+            <Form onSubmit={handlePayment}>
+              <Form.Group className="mb-3" controlId="name">
+                <Form.Label>Cardholder Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Name on card"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                />
+              </Form.Group>
 
-            <Row>
-              <Col md={6}>
-                <Form.Group className="mb-3" controlId="expiry">
-                  <Form.Label>Expiry Date</Form.Label>
-                  <Form.Control
-                    type="text"
-                    inputMode="numeric"
-                    placeholder="MM/YY"
-                    value={expiry}
-                    onChange={handleExpiryChange}
-                    required
-                  />
-                </Form.Group>
-              </Col>
-              <Col md={6}>
-                <Form.Group className="mb-3" controlId="cvv">
-                  <Form.Label>CVV</Form.Label>
-                  <Form.Control
-                    type="password"
-                    inputMode="numeric"
-                    placeholder="123"
-                    value={cvv}
-                    onChange={handleCVVChange}
-                    required
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
+              <Form.Group className="mb-3" controlId="cardNumber">
+                <Form.Label>Card Number</Form.Label>
+                <Form.Control
+                  type="text"
+                  inputMode="numeric"
+                  placeholder="1234 5678 9012 3456"
+                  value={cardNumber}
+                  onChange={handleCardChange}
+                  required
+                />
+              </Form.Group>
 
-            <Button variant="dark" type="submit" className="w-100">
-              Pay Now
-            </Button>
-          </Form>
-        </Card>
+              <Row>
+                <Col md={6}>
+                  <Form.Group className="mb-3" controlId="expiry">
+                    <Form.Label>Expiry Date</Form.Label>
+                    <Form.Control
+                      type="text"
+                      inputMode="numeric"
+                      placeholder="MM/YY"
+                      value={expiry}
+                      onChange={handleExpiryChange}
+                      required
+                    />
+                  </Form.Group>
+                </Col>
+                <Col md={6}>
+                  <Form.Group className="mb-3" controlId="cvv">
+                    <Form.Label>CVV</Form.Label>
+                    <Form.Control
+                      type="password"
+                      inputMode="numeric"
+                      placeholder="123"
+                      value={cvv}
+                      onChange={handleCVVChange}
+                      required
+                    />
+                  </Form.Group>
+                </Col>
+              </Row>
+
+              <Button variant="dark" type="submit" className="w-100">
+                Pay Now ₹
+                {selectedRoom && bookingDetails
+                  ? selectedRoom.price *
+                    bookingDetails.guests *
+                    bookingDetails.nights
+                  : ''}
+              </Button>
+            </Form>
+          </Card>
+        </>
       )}
     </Container>
   );

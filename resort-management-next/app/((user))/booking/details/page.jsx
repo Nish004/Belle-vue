@@ -15,7 +15,6 @@ export default function BookingDetailsPage() {
     guests: 1,
   });
 
-  // ✅ useEffect now correctly inside the component
   useEffect(() => {
     const storedRoom = localStorage.getItem('selectedRoom');
     if (!storedRoom) {
@@ -37,14 +36,22 @@ export default function BookingDetailsPage() {
       return;
     }
 
-    const days =
-      (new Date(formData.checkOut) - new Date(formData.checkIn)) / (1000 * 60 * 60 * 24);
-    const totalPrice = selectedRoom.price * days;
+    const inDate = new Date(formData.checkIn);
+    const outDate = new Date(formData.checkOut);
+    const numDays = Math.ceil((outDate - inDate) / (1000 * 60 * 60 * 24));
+
+    if (numDays <= 0) {
+      alert('Invalid check-in/check-out dates.');
+      return;
+    }
+
+    const totalPrice = selectedRoom.price * formData.guests * numDays;
 
     const bookingData = {
       room_id: selectedRoom.id,
       check_in: formData.checkIn,
       check_out: formData.checkOut,
+      guests: formData.guests,
       total_price: totalPrice,
     };
 
