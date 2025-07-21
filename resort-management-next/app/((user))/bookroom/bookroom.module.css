@@ -1,17 +1,25 @@
-/* bookroom.module.css */
+.wrapper {
+  background-color: #f8f5f2;
+  padding: 6rem 0 4rem; /* ⬅️ Added extra top padding */
+  min-height: 100vh;
+}
 
 .container {
-  padding-top: 7rem; /* leaves room under navbar */
-  padding-bottom: 3rem;
-  background-color: #fff;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.headingWrapper {
+  text-align: center;
+  margin-bottom: 3rem;
 }
 
 .title {
-  text-align: center;
-  font-size: 2.5rem;
-  font-weight: 600;
-  color: #222; /* Professional, not too harsh */
-  margin-bottom: 2rem;
+  font-size: 3rem;
+  font-weight: 300;
+  color: #333;
+  letter-spacing: 2px;
+  text-transform: uppercase;
   position: relative;
 }
 
@@ -19,69 +27,74 @@
   content: '';
   display: block;
   width: 80px;
-  height: 4px;
-  background-color: #FFD700; /* Gold yellow underline */
-  margin: 0.5rem auto 0 auto;
-  border-radius: 2px;
-}
-
-.imageWrapper {
-  position: relative;
-  width: 100%;
-  height: 200px;
-  overflow: hidden;
-  border-top-left-radius: 1rem;
-  border-top-right-radius: 1rem;
-}
-
-.imageWrapper img {
-  border-top-left-radius: 1rem;
-  border-top-right-radius: 1rem;
-  transition: transform 0.3s ease;
-}
-
-.imageWrapper:hover img {
-  transform: scale(1.05);
+  height: 3px;
+  background: #c8a97e;
+  margin: 20px auto 0;
 }
 
 .card {
   border: none;
   border-radius: 1rem;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.3s ease;
   overflow: hidden;
-  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
 }
 
 .card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.imageWrapper {
+  height: 250px;
+  overflow: hidden;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
 }
 
 .cardBody {
-  padding: 1.5rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  padding: 1.25rem;
+  background-color: #fff;
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+}
+
+.cardBody h5, .cardBody p {
+  margin-bottom: 0.75rem;
 }
 
 .price {
-  font-weight: 600;
-  color: #FFD700; /* Gold yellow accent */
-  font-size: 1.1rem;
-  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #c8a97e;
+  margin-top: auto;
 }
 
 .buttonDark {
-  background-color: #212529;
-  border: none;
+  background-color: #333;
   color: white;
-  padding: 0.5rem 1.2rem;
-  border-radius: 0.5rem;
-  transition: background-color 0.2s ease;
+  border: none;
+  padding: 10px 20px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
 }
 
 .buttonDark:hover {
-  background-color: #000;
+  background-color: #555;
 }
 
+.modal-body h5 {
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.modal-body p {
+  color: #666;
+}

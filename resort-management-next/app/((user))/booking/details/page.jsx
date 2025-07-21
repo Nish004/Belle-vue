@@ -1,6 +1,6 @@
 'use client';
+
 import { useRouter } from 'next/navigation';
-import { Container, Form, Button, Row, Col } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import styles from './details.module.css';
 
@@ -60,93 +60,87 @@ export default function BookingDetailsPage() {
   };
 
   return (
-    <Container className="py-5 mt-5" style={{ paddingTop: '100px' }}>
-      <h2 className="text-center mb-4">Guest Details</h2>
-
-      <Form onSubmit={handleSubmit} className={styles.formWrapper}>
-        <Row className="mb-3">
-          <Col md={6}>
-            <Form.Group controlId="fullName">
-              <Form.Label>Full Name</Form.Label>
-              <Form.Control
-                name="fullName"
-                value={formData.fullName}
-                onChange={handleChange}
-                required
-              />
-            </Form.Group>
-          </Col>
-          <Col md={6}>
-            <Form.Group controlId="email">
-              <Form.Label>Email</Form.Label>
-              <Form.Control
-                name="email"
-                type="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
-            </Form.Group>
-          </Col>
-        </Row>
-
-        <Row className="mb-3">
-          <Col md={6}>
-            <Form.Group controlId="phone">
-              <Form.Label>Phone Number</Form.Label>
-              <Form.Control
-                name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-                required
-              />
-            </Form.Group>
-          </Col>
-          <Col md={3}>
-            <Form.Group controlId="checkIn">
-              <Form.Label>Check-in Date</Form.Label>
-              <Form.Control
-                name="checkIn"
-                type="date"
-                value={formData.checkIn}
-                onChange={handleChange}
-                required
-              />
-            </Form.Group>
-          </Col>
-          <Col md={3}>
-            <Form.Group controlId="checkOut">
-              <Form.Label>Check-out Date</Form.Label>
-              <Form.Control
-                name="checkOut"
-                type="date"
-                value={formData.checkOut}
-                onChange={handleChange}
-                required
-              />
-            </Form.Group>
-          </Col>
-        </Row>
-
-        <Form.Group className="mb-4" controlId="guests">
-          <Form.Label>Number of Guests</Form.Label>
-          <Form.Control
-            name="guests"
-            type="number"
-            min="1"
-            max="10"
-            value={formData.guests}
-            onChange={handleChange}
-            required
-          />
-        </Form.Group>
-
-        <div className="text-center">
-          <Button type="submit" variant="dark" className={styles.submitButton}>
-            Continue to Payment
-          </Button>
+    <div className={styles.formContainer}>
+      <h2 className={styles.heading}>Guest Details 🧳</h2>
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <div className={styles.row}>
+          <div className={styles.formGroup}>
+            <label>Full Name</label>
+            <input
+              name="fullName"
+              value={formData.fullName}
+              onChange={handleChange}
+              required
+              placeholder="John Doe"
+            />
+          </div>
+          <div className={styles.formGroup}>
+            <label>Email</label>
+            <input
+              name="email"
+              type="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              placeholder="you@example.com"
+            />
+          </div>
         </div>
-      </Form>
-    </Container>
+
+        <div className={styles.row}>
+          <div className={styles.formGroup}>
+            <label>Phone</label>
+            <input
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              required
+              placeholder="+91 9876543210"
+            />
+          </div>
+          <div className={styles.formGroup}>
+            <label>Check-in</label>
+            <input
+              name="checkIn"
+              type="date"
+              value={formData.checkIn}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className={styles.formGroup}>
+            <label>Check-out</label>
+            <input
+              name="checkOut"
+              type="date"
+              value={formData.checkOut}
+              onChange={handleChange}
+              required
+            />
+          </div>
+        </div>
+
+        <div className={styles.row}>
+          <div className={styles.formGroup}>
+            <label>No. of Guests</label>
+            <input
+              name="guests"
+              type="number"
+              min="1"
+              max="4"
+              value={formData.guests}
+              onChange={handleChange}
+              required
+            />
+          </div>
+        </div>
+
+        <div className={styles.center}>
+          <button type="submit" className={styles.button}>
+            Continue to Payment
+          </button>
+        </div>
+      </form>
+    </div>
   );
 }

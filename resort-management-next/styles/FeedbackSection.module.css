@@ -1,0 +1,101 @@
+.feedbackSectionWrapper {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 3rem 2rem;
+  margin: 4rem auto;
+  max-width: 900px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.feedbackHeading {
+  text-align: center;
+  font-size: 2.5rem;
+  color: #333;
+  font-weight: 300;
+  margin-bottom: 2rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.feedbackEmpty {
+  text-align: center;
+  color: #888;
+  font-style: italic;
+}
+
+.feedbackList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.feedbackCard {
+  border: 1px solid #eee;
+  padding: 1.5rem;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.feedbackHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.username {
+  font-weight: 600;
+  color: #333;
+}
+
+.rating {
+  color: #c8a97e;
+  font-weight: 500;
+}
+
+.comment {
+  color: #555;
+  line-height: 1.6;
+  margin: 0.5rem 0;
+}
+
+.timestamp {
+  font-size: 0.85rem;
+  color: #999;
+}
+
+.adminReply {
+  background-color: #f0f0f0;
+  border-left: 4px solid #c8a97e;
+  padding: 1rem;
+  margin-top: 1rem;
+  border-radius: 4px;
+  color: #444;
+  font-size: 0.95rem;
+}
+
+.replyTimestamp {
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.formWrapper {
+  margin-top: 2rem;
+}
+
+.infoMessage {
+  text-align: center;
+  color: #888;
+  font-style: italic;
+  margin-top: 2rem;
+}
+
+.feedbackScrollContainer {
+  max-height: 400px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-right: 0.5rem;
+}

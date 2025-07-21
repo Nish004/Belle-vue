@@ -1,23 +1,74 @@
-.formWrapper {
-  max-width: 800px;
-  margin: 0 auto;
+.formContainer {
+  max-width: 900px;
+  margin: 80px auto;
+  background-color: #f8f5f2;
+  padding: 3rem;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 
-.formWrapper input,
-.formWrapper select {
-  padding: 10px;
-  border-radius: 8px;
+.heading {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  font-weight: 300;
+  color: #333;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.formGroup {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.formGroup label {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: #555;
+}
+
+.formGroup input {
+  padding: 10px 15px;
+  font-size: 1rem;
   border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #fff;
+  transition: border-color 0.3s ease;
 }
 
-.formWrapper input:focus,
-.formWrapper select:focus {
-  border-color: #333;
+.formGroup input:focus {
+  border-color: #c8a97e;
   outline: none;
 }
 
-.submitButton {
-  padding: 10px 30px;
-  font-weight: 600;
-  border-radius: 10px;
+.center {
+  display: flex;
+  justify-content: center;
+}
+
+.button {
+  background-color: #c8a97e;
+  color: white;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #b6906c;
 }
